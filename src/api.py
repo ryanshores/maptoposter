@@ -11,10 +11,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRoute as Route
 from fastapi.routing import Mount
-from create_map_poster import create_poster, POSTERS_DIR
-from models.api import ApiContext
-from config import app_context
-from models.create_poster import CreatePoster
+from src.create_map_poster import create_poster, POSTERS_DIR
+from src.models.api import ApiContext
+from src.config import app_context
+from src.models.create_poster import CreatePoster
 
 # Configuration
 BASE_DIR = Path(__file__).resolve().parent  # Gets the absolute path to the project root

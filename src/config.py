@@ -1,6 +1,6 @@
 import os
 
-from models.app import AppContext
+from src.models.app import AppContext
 
 # Initialize the context object
 app_context = AppContext(
