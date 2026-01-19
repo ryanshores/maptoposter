@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1>Generate</h1>
+    <form action="/create_poster" method="POST">
+        <p>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+        </p>
+        <p>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" value="USA" required>
+        </p>
+        <p>
+            <label for="theme">Theme:</label>
+            <input type="text" id="theme" name="theme" value="autumn">
+        </p>
+        <p>
+            <label for="distance">Distance:</label>
+            <input type="number" id="distance" name="distance" value="6000">
+        </p>
+        <input type="submit" value="Generate">
+    </form>
+
+</body>
+</html>

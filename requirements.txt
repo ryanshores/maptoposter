@@ -27,3 +27,11 @@ six==1.17.0
 tqdm==4.67.1
 tzdata==2025.3
 urllib3==2.6.3
+
+fastapi
+uvicorn
+jinja2
+httpx
+pytest
+pytest-mock
+python-multipart
