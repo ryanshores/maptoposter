@@ -35,3 +35,4 @@ httpx
 pytest
 pytest-mock
 python-multipart
+diskcache

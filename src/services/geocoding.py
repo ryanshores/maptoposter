@@ -1,8 +1,12 @@
 import time
 
 from geopy import Nominatim
+from diskcache import Cache
 
+# Cache is stored in the project's cache folder
+cache = Cache("cache/geocoding")
 
+@cache.memoize(expire=60 * 60 * 24 * 30)  # Cache for 30 days
 def get_coordinates(city, country):
     """
     Fetches coordinates for a given city and country using geopy.
