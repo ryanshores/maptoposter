@@ -213,7 +213,7 @@ def get_coordinates(city, country):
     else:
         raise ValueError(f"Could not find coordinates for {city}, {country}")
 
-def create_poster(city, country, point, dist, output_file):
+def process_create_poster(city, country, point, dist, output_file):
     print(f"\nGenerating map for {city}, {country}...")
     
     # Progress bar for data fetching
@@ -403,6 +403,14 @@ def list_themes():
             print(f"    {description}")
         print()
 
+def create_poster(city, country, theme, distance):
+    # Get coordinates and generate poster
+    coords = get_coordinates(city, country)
+    output_file = generate_output_filename(city, theme)
+    process_create_poster(city, country, coords, distance, output_file)
+
+    return output_file
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Generate beautiful map posters for any city",
@@ -456,9 +464,7 @@ Examples:
     
     # Get coordinates and generate poster
     try:
-        coords = get_coordinates(args.city, args.country)
-        output_file = generate_output_filename(args.city, args.theme)
-        create_poster(args.city, args.country, coords, args.distance, output_file)
+        create_poster(args.city, args.country, args.theme, args.distance)
         
         print("\n" + "=" * 50)
         print("✓ Poster generation complete!")
