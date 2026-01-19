@@ -1,10 +1,12 @@
 import logging
 import os
+import threading
 import typing
 from pathlib import Path
+from typing import Annotated
 
 import uvicorn
-from fastapi import Request, FastAPI
+from fastapi import Request, FastAPI, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRoute as Route
@@ -12,6 +14,7 @@ from fastapi.routing import Mount
 from create_map_poster import create_poster, POSTERS_DIR
 from models.api import ApiContext
 from config import app_context
+from models.create_poster import CreatePoster
 
 # Configuration
 BASE_DIR = Path(__file__).resolve().parent  # Gets the absolute path to the project root
@@ -30,7 +33,7 @@ api_context = ApiContext(
 def get_app_context(request: Request) -> typing.Dict[str, typing.Any]:
     return {
         'app': app_context,
-        'api': api_context
+        'api': api_context,
     }
 
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR), context_processors=[get_app_context])
@@ -66,28 +69,32 @@ async def get_posters(request: Request):
     )
 
 async def generate(request: Request):
+    themes = os.listdir(os.path.join(BASE_DIR, "themes"))
     return templates.TemplateResponse(
         "generate.html",
         {
             "request": request,
-            "title": f"{app_context.name} - Generate Poster"
+            "title": f"{app_context.name} - Generate Poster",
+            "themes": themes,
         }
     )
 
-async def create_poster_view(request: Request):
+async def create_poster_view(data: Annotated[CreatePoster, Form()]):
     """Generates a new poster."""
-    city, country = request.query_params["city"], request.query_params["country"]
-    theme_name = request.query_params.get("theme", "default")
-    distance = request.query_params.get("distance", 6000)
-    output_file = create_poster(city, country, theme_name, distance)
-    return {"file": output_file}
+    try:
+        # run in a different thread so a server restart doesn't block
+        thread = threading.Thread(target=create_poster, args=(data.city, data.country, data.theme, data.distance))
+        thread.start()
+        return {"status": "OK"}
+    except Exception as e:
+        return {"status": str(e)}
 
 
 routes = [
     Route("/", endpoint=home, methods=["GET"]),
     Route("/posters", endpoint=get_posters, methods=["GET"]),
     Route("/generate", endpoint=generate, methods=["GET"]),
-    Route("/create_poster", endpoint=create_poster_view, methods=["GET"]),
+    Route("/create_poster", endpoint=create_poster_view, methods=["POST"]),
     Mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static"),
     Mount("/s/posters", StaticFiles(directory=str(POSTERS_DIR)), name="posters")
 ]
