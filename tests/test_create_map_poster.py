@@ -1,7 +1,7 @@
 # tests/test_create_map_poster.py
 import networkx as nx
 from shared import TEST_CITY, TEST_COUNTRY, TEST_COORDS, TEST_DIST, TEST_THEME
-from src.create_map_poster import generate_output_filename, process_create_poster
+from services.create_map_poster import generate_output_filename, process_create_poster
 
 
 def test_generate_output_file(tmp_path):
@@ -15,9 +15,9 @@ def test_process_create_poster_valid_input(mocker, tmp_path):
     graph = nx.MultiDiGraph()
     mock_graph_from_point = mocker.patch("osmnx.graph_from_point", return_value=graph)
     mock_features_from_point = mocker.patch("osmnx.features_from_point", return_value=None)
-    mock_get_edge_colors_by_type = mocker.patch("src.create_map_poster.get_edge_colors_by_type", return_value=None)
-    mock_get_edge_widths_by_type = mocker.patch("src.create_map_poster.get_edge_widths_by_type", return_value=None)
-    mock_plot_graph = mocker.patch("src.create_map_poster.ox.plot_graph")
+    mock_get_edge_colors_by_type = mocker.patch("services.create_map_poster.get_edge_colors_by_type", return_value=["#000000"])
+    mock_get_edge_widths_by_type = mocker.patch("services.create_map_poster.get_edge_widths_by_type", return_value=[1.0])
+    mocker.patch("osmnx.plot_graph")
     mock_plt_savefig = mocker.patch("matplotlib.pyplot.savefig")
 
     # Define parameters

@@ -11,9 +11,8 @@ import os
 from datetime import datetime
 import argparse
 
-THEMES_DIR = "themes"
-FONTS_DIR = "fonts"
-POSTERS_DIR = "posters"
+from config import FONTS_DIR, POSTERS_DIR, THEMES_DIR
+
 
 def load_fonts():
     """
