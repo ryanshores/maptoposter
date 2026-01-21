@@ -1,6 +1,6 @@
 import os
 
-from src.models.app import AppContext
+from models.app import AppContext
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent  # Gets the absolute path to the project root
