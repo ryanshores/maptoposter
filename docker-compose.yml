@@ -3,21 +3,3 @@ services:
     build: .
     ports:
       - "8000"
-    # Add environment variables if needed, for example:
-    # environment:
-    #   DATABASE_URL: postgres://user:password@db:5432/mydatabase
-    # depends_on is a great way to express dependency order for services
-    # depends_on:
-    #   - db
-
-  # Example of adding a database service
-  # db:
-  #   image: "postgres:13"
-  #   environment:
-  #     POSTGRES_PASSWORD: mysecretpassword
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-
-# Define a volume for data persistence (if using a database)
-# volumes:
-#   db-data:
