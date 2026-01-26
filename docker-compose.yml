@@ -3,8 +3,6 @@ services:
     build: .
     ports:
       - "8000"
-    volumes:
-      - .:/usr/src/app
     # Add environment variables if needed, for example:
     # environment:
     #   DATABASE_URL: postgres://user:password@db:5432/mydatabase
