@@ -3,12 +3,16 @@ import os
 from models.app import AppContext
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent  # Gets the absolute path to the project root
+# src directory
+BASE_DIR = Path(__file__).resolve().parent
+# Project root directory (one level up from src/)
+ROOT_DIR = BASE_DIR.parent
+
 TEMPLATES_DIR = BASE_DIR / 'templates'
 STATIC_DIR = BASE_DIR / 'static'
-POSTERS_DIR = BASE_DIR / 'posters'
-THEMES_DIR = BASE_DIR / 'themes'
-FONTS_DIR = BASE_DIR / 'fonts'
+POSTERS_DIR = ROOT_DIR / 'posters'  # Use root-level posters
+THEMES_DIR = ROOT_DIR / 'themes'  # Use root-level themes
+FONTS_DIR = ROOT_DIR / 'fonts'  # Use root-level fonts
 
 # Initialize the context object
 app_context = AppContext(

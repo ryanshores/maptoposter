@@ -66,7 +66,9 @@ async def get_posters(request: Request):
     )
 
 async def generate(request: Request):
-    themes = os.listdir(os.path.join(BASE_DIR, "themes"))
+    # Get themes from root-level themes directory
+    from services.create_map_poster import get_available_themes
+    themes = get_available_themes()
     return templates.TemplateResponse(
         "generate.html",
         {
