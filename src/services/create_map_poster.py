@@ -20,7 +20,7 @@ from create_map_poster import (
 )
 
 # Use local geocoding with diskcache (better for the web API)
-from geocoding import get_coordinates
+from services.geocoding import get_coordinates
 
 # Re-export POSTERS_DIR for compatibility with the API
 from config import POSTERS_DIR
